@@ -3,4 +3,5 @@
 @tailwind utilities;
 @tailwind screens;
 
-@layer base {}
+@layer base {
+}

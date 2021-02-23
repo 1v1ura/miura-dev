@@ -1,12 +1,13 @@
+import { FunctionComponent, ReactNode } from 'react'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 import Meta from '@/components/meta'
 
 type Props = {
-  children: React.ReactNode
+  children: ReactNode
 }
 
-const Layout = ({ children }: Props) => {
+const Layout: FunctionComponent<Props> = ({ children }: Props) => {
   return (
     <>
       <Meta />

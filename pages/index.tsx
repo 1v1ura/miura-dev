@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import cn from 'classnames'
 import Layout from '@/components/layout'
 import Container from '@/components/container'
@@ -10,7 +11,7 @@ type Props = {
   allPosts: Post[]
 }
 
-const Index = ({ allPosts }: Props) => {
+const Index: FunctionComponent<Props> = ({ allPosts }: Props) => {
   return (
     <>
       <Layout>
@@ -20,9 +21,12 @@ const Index = ({ allPosts }: Props) => {
 
             <ul>
               {allPosts.map((post, index) => (
-                <li className={cn({
-                  'mb-4': index !== allPosts.length -1
-                })} key={post.slug}>
+                <li
+                  className={cn({
+                    'mb-4': index !== allPosts.length - 1,
+                  })}
+                  key={post.slug}
+                >
                   <PostOverview
                     title={post.title}
                     date={post.date}
@@ -40,12 +44,12 @@ const Index = ({ allPosts }: Props) => {
 
 export default Index
 
-export const getStaticProps = async () => {
-  const allPosts = getAllPosts([
-    'title',
-    'date',
-    'slug'
-  ])
+export const getStaticProps = async (): Promise<{
+  props: {
+    allPosts: string[]
+  }
+}> => {
+  const allPosts = getAllPosts(['title', 'date', 'slug'])
 
   return {
     props: { allPosts },

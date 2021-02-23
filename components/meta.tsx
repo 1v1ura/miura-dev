@@ -1,10 +1,11 @@
+import { FunctionComponent } from 'react'
 import Head from 'next/head'
 import { APP_NAME } from '@/constants'
 
-const Meta = () => {
+const Meta: FunctionComponent = () => {
   return (
     <Head>
-      <title>{ APP_NAME }</title>
+      <title>{APP_NAME}</title>
       <meta name="description" content="フロントエンドエンジニアのブログ" />
       <link
         rel="apple-touch-icon"

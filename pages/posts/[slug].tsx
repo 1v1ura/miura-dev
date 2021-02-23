@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import Head from 'next/head'
 import Container from '@/components/container'
 import PostBody from '@/components/post-body'
@@ -13,24 +14,21 @@ type Props = {
   morePosts: PostType[]
 }
 
-const Post = ({ post }: Props) => {
+const Post: FunctionComponent<Props> = ({ post }: Props) => {
   return (
     <Layout>
       <Container>
-            <article className="mb-32">
-              <Head>
-                <title>
-                  { post.title } | { APP_NAME }
-                </title>
-              </Head>
+        <article className="mb-32">
+          <Head>
+            <title>
+              {post.title} | {APP_NAME}
+            </title>
+          </Head>
 
-              <PostHeader
-                title={post.title}
-                date={post.date}
-              />
+          <PostHeader title={post.title} date={post.date} />
 
-              <PostBody content={post.content} />
-            </article>
+          <PostBody content={post.content} />
+        </article>
       </Container>
     </Layout>
   )
@@ -44,13 +42,14 @@ type Params = {
   }
 }
 
-export async function getStaticProps({ params }: Params) {
-  const post = getPostBySlug(params.slug, [
-    'title',
-    'date',
-    'slug',
-    'content',
-  ])
+export async function getStaticProps({
+  params,
+}: Params): Promise<{
+  props: {
+    post: PostType
+  }
+}> {
+  const post = getPostBySlug(params.slug, ['title', 'date', 'slug', 'content'])
 
   const content = await markdownToHtml(post.content || '')
 
@@ -59,12 +58,20 @@ export async function getStaticProps({ params }: Params) {
       post: {
         ...post,
         content,
-      }
+      },
     },
   }
 }
 
-export async function getStaticPaths() {
+export async function getStaticPaths(): Promise<{
+  paths: {
+    params: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      slug: any
+    }
+  }[]
+  fallback: boolean
+}> {
   const posts = getAllPosts(['slug'])
 
   return {

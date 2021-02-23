@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import DateFormatter from '@/components/date-formatter'
 import PageTitle from '@/components/headings/page-title'
 
@@ -6,7 +7,7 @@ type Props = {
   date: string
 }
 
-const PostHeader = ({ title, date }: Props) => {
+const PostHeader: FunctionComponent<Props> = ({ title, date }: Props) => {
   return (
     <>
       <div className="max-w-2xl mx-auto">

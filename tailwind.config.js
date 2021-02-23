@@ -1,16 +1,24 @@
+/* eslint-env node */
 module.exports = {
   purge: ['./components/**/*.tsx', './pages/**/*.tsx'],
   darkMode: false,
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['Helvetica\\ Neue', 'Arial', 'Hiragino\\ Kaku\\ Gothic\\ ProN', 'Hiragino\\ Sans', 'Meiryo', 'sans-serif'],
+        sans: [
+          'Helvetica\\ Neue',
+          'Arial',
+          'Hiragino\\ Kaku\\ Gothic\\ ProN',
+          'Hiragino\\ Sans',
+          'Meiryo',
+          'sans-serif',
+        ],
       },
       gridTemplateRows: {
         'layout-default': 'auto 30px 1fr 80px auto',
       },
       scale: {
-        '101': '1.01'
+        101: '1.01',
       },
       colors: {
         'accent-1': '#FAFAFA',
