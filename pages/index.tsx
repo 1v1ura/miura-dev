@@ -5,10 +5,10 @@ import Container from '@/components/container'
 import PageTitle from '@/components/headings/page-title'
 import PostOverview from '@/components/post-overview'
 import { getAllPosts } from '@/lib/api'
-import Post from '@/types/post'
+import PostType from '@/types/post'
 
 type Props = {
-  allPosts: Post[]
+  allPosts: PostType[]
 }
 
 const Index: FunctionComponent<Props> = ({ allPosts }: Props) => {
@@ -46,10 +46,10 @@ export default Index
 
 export const getStaticProps = async (): Promise<{
   props: {
-    allPosts: string[]
+    allPosts: PostType[]
   }
 }> => {
-  const allPosts = getAllPosts(['title', 'date', 'slug'])
+  const allPosts = getAllPosts()
 
   return {
     props: { allPosts },

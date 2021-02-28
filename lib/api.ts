@@ -1,6 +1,7 @@
 import fs from 'fs'
 import { join } from 'path'
 import matter from 'gray-matter'
+import PostType from '@/types/post'
 
 const postsDirectory = join(process.cwd(), 'posts')
 
@@ -8,40 +9,26 @@ export function getPostSlugs(): string[] {
   return fs.readdirSync(postsDirectory)
 }
 
-export function getPostBySlug(slug: string, fields: string[] = []): Items {
+export function getPostBySlug(slug: string): PostType {
   const realSlug = slug.replace(/\.md$/, '')
   const fullPath = join(postsDirectory, `${realSlug}.md`)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const { data, content } = matter(fileContents)
 
-  type Items = {
-    [key: string]: string
+  return {
+    slug: realSlug,
+    title: data.title,
+    date: data.date,
+    content: content,
   }
-
-  const items: Items = {}
-
-  fields.forEach((field) => {
-    if (field === 'slug') {
-      items[field] = realSlug
-    }
-
-    if (field === 'content') {
-      items[field] = content
-    }
-
-    if (data[field]) {
-      items[field] = data[field]
-    }
-  })
-
-  return items
 }
 
-export function getAllPosts(fields: string[] = []): string[] {
+export function getAllPosts(): PostType[] {
   const slugs = getPostSlugs()
-  const posts = slugs
-    .map((slug) => getPostBySlug(slug, fields))
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
+  const posts = slugs.map((slug) => getPostBySlug(slug))
+  const sortedPosts = posts.sort((post1, post2) =>
+    post1.date > post2.date ? -1 : 1
+  )
 
-  return posts
+  return sortedPosts
 }

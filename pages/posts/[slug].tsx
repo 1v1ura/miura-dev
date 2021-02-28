@@ -49,7 +49,7 @@ export async function getStaticProps({
     post: PostType
   }
 }> {
-  const post = getPostBySlug(params.slug, ['title', 'date', 'slug', 'content'])
+  const post = getPostBySlug(params.slug)
 
   const content = await markdownToHtml(post.content || '')
 
@@ -66,19 +66,18 @@ export async function getStaticProps({
 export async function getStaticPaths(): Promise<{
   paths: {
     params: {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      slug: any
+      slug: string
     }
   }[]
   fallback: boolean
 }> {
-  const posts = getAllPosts(['slug'])
+  const posts = getAllPosts()
 
   return {
-    paths: posts.map((posts) => {
+    paths: posts.map((post) => {
       return {
         params: {
-          slug: posts.slug,
+          slug: post.slug,
         },
       }
     }),
